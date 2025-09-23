@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">uniLocal</string>
+
+    <!-- Formulario Login -->
+    <string name="txt_email">Correo electrónico</string>
+    <string name="txt_password">Contraseña</string>
+    <string name="btn_login">Iniciar sesion</string>
+    <string name="txt_image">Imagen de frisby</string>
+    <string name="txt_email_error">El correo es obligatorio y debe ser valido</string>
+    <string name="txt_password_error">La contraseña debe de tener al menos 5 caracteres</string>
+    <string name="txt_create_account">Crear cuenta</string>
+
+
+    <!-- Formulario Register -->
+    <string name="txt_city">Seleccione la ciudad</string>
+    <string name="txt_country">Seleccione el pais</string>
+    <string name="txt_name">Nombre completo</string>
+    <string name="txt_user">Nombre de usuario</string>
+    <string name="txt_phone">Numero de telefono</string>
+    <string name="txt_confirmPassword">Confirmar contraseña</string>
+    <string name="btn_register">Registrarse</string>
+
+
+
+
+    <!-- Login error -->
+    <string name="txt_name_error">El nombre es obligatorio</string>
+    <string name="txt_user_error">El nombre de usuario es obligatorio</string>
+    <string name="txt_phone_error">El numero de telefono es obligatorio</string>
+    <string name="txt_confirmPassword_error">Las contraseñas no coinciden</string>
+    <string name="btn_inicio_sesion">Iniciar sesion</string>
+    <string name="txt_register_account">Crea tu cuenta</string>
+    <string name="txt_country_error">El pais no debe quedar vacio</string>
+    <string name="btn_create_account">Crear cuenta</string>
+
+    <!-- HomeUser -->
+    <string name="title_usere">Inicio usuario</string>
+    <string name="txt_menu_home">Inicio</string>
+    <string name="txt_menu_search">Busqueda</string>
+    <string name="txt_menu_places">Mis lugares</string>
+    <string name="txt_menu_profile">Perfil</string>
+    <string name="title_admin">Moderacion\n</string>
+    <string name="txt_menu_new_place">Crear lugar\n</string>
+
+    <!-- CreatePlace Form -->
+    <string name="txt_name_place">Nombre del establecimiento</string>
+    <string name="txt_place_error">El nombre debe de ser obligatorio</string>
+    <string name="txt_direction">Direccion del establecimiento</string>
+    <string name="txt_direction_error">La direccion debe de ser obligatora\n</string>
+    <string name="btn_new_pace">Crear</string>
+    
+    <!-- Update profile -->
+    <string name="txt_update_profile">Actualizar datos</string>
+    <string name="btn_update_profile">Confirmar</string>"
+
+
+</resources>
