@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.example.unilocal.viewmodel.PlacesViewModel
-//import coil.compose.AsyncImage
+import coil.compose.AsyncImage
 
 
 @Composable
@@ -18,20 +18,20 @@ fun Places(placesViewModel: PlacesViewModel){
 
     val places by placesViewModel.places.collectAsState()
 
-//    LazyColumn {
-//        items(places){
-//
-//            Row{
-//                Text(text = it.title)
-//            }
-//
-//            AsyncImage(
-//                model = it.images[0],
-//                contentDescription = it.description
-//            )
-//
-//        }
-//
-//    }
+    LazyColumn {
+        items(places){
+
+            Row{
+                Text(text = it.title)
+            }
+
+            AsyncImage(
+                model = it.images[0],
+                contentDescription = it.description
+            )
+
+        }
+
+    }
 
 }

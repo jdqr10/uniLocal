@@ -44,8 +44,8 @@ fun LoginScreen(
     onNavigateToRegister: () -> Unit = {},
     onNavigateToHome: () -> Unit = {}
 ) {
-    var email by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
+    var email by rememberSaveable { mutableStateOf("genaro@gmail.com") }
+    var password by rememberSaveable { mutableStateOf("12345") }
 
     Surface {
         Column(

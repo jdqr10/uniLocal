@@ -39,8 +39,8 @@
     <string name="txt_menu_search">Busqueda</string>
     <string name="txt_menu_places">Mis lugares</string>
     <string name="txt_menu_profile">Perfil</string>
-    <string name="title_admin">Moderacion\n</string>
-    <string name="txt_menu_new_place">Crear lugar\n</string>
+    <string name="title_admin">Moderacion</string>
+    <string name="txt_menu_new_place">Crear lugar</string>
 
     <!-- CreatePlace Form -->
     <string name="txt_name_place">Nombre del establecimiento</string>

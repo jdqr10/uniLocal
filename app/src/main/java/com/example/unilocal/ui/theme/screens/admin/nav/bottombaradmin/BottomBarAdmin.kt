@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.unilocal.R
+import com.example.unilocal.ui.theme.screens.admin.nav.RouteTabAdmin
 import com.example.unilocal.ui.theme.screens.user.nav.RouteTab
 
 @Composable
@@ -58,10 +59,10 @@ fun BottomBarAdmin(
 }
 
 enum class Destination(
-    val route: RouteTab,
+    val route: RouteTabAdmin,
     val label: Int,
     val icon: ImageVector,
 ){
-    CONFIRMATION(RouteTab.Map, R.string.txt_menu_home, Icons.Default.Home),
-    PROFILE(RouteTab.Profile, R.string.txt_menu_profile, Icons.Default.AccountCircle)
+    CONFIRMATION(RouteTabAdmin.Confirmation, R.string.txt_menu_home, Icons.Default.Home),
+    PROFILE(RouteTabAdmin.ProfileAdmin, R.string.txt_menu_profile, Icons.Default.AccountCircle)
 }
