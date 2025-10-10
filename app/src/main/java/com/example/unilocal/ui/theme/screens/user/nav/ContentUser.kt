@@ -41,7 +41,12 @@ fun ContentUser(
         }
 
         composable<RouteTab.Search>{
-            Search()
+            Search(
+                placesViewModel = placesViewModel,
+                onNavigateToPlaceDetail = { id ->
+                    navController.navigate(RouteTab.PlaceDetail(id))
+                }
+            )
         }
         composable<RouteTab.Places>{
             Places(
@@ -61,6 +66,8 @@ fun ContentUser(
                 id = args.id
             )
         }
+
+
     }
 
 }
