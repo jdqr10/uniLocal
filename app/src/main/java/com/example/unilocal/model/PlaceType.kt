@@ -6,5 +6,9 @@ enum class PlaceType(
 
     RESTAURANTE,
     BAR,
-    CAFETERIA
+    CAFETERIA,
+    HOTEL,
+    SHOPPING,
+    PARK,
+
 }

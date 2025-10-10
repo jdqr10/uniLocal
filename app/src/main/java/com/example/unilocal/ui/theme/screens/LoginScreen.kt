@@ -2,6 +2,7 @@ package com.example.unilocal.ui.theme.screens
 
 import android.util.Log
 import android.util.Patterns
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,20 +33,25 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.unilocal.R
 import com.example.unilocal.ui.theme.AppColors
 import com.example.unilocal.ui.theme.components.InputText
+import com.example.unilocal.viewmodel.UsersViewModel
 
 
 @Composable
 fun LoginScreen(
+    usersViewModel: UsersViewModel,
     onNavigateToRegister: () -> Unit = {},
     onNavigateToHome: () -> Unit = {}
 ) {
-    var email by rememberSaveable { mutableStateOf("genaro@gmail.com") }
-    var password by rememberSaveable { mutableStateOf("12345") }
+    var email by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+
+    val context = LocalContext.current
 
     Surface {
         Column(
@@ -105,10 +111,16 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    if (email == "genaro@gmail.com" && password == "12345") {
+                    val userLoged = usersViewModel.login(email, password)
+
+                    if (userLoged != null) {
                         onNavigateToHome()
-                    } else {
-                        Log.d("LoginScreen", "Correo: $email, Contraseña: $password")
+                        Toast.makeText(context, "Bienvenido", Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(
+                            context,
+                            "Credenciales incorrectas",
+                            Toast.LENGTH_SHORT).show()
                     }
                 },
 
