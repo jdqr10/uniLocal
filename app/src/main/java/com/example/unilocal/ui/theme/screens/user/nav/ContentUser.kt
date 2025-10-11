@@ -8,8 +8,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.example.unilocal.ui.theme.screens.user.tabs.Map
 import com.example.unilocal.ui.theme.screens.user.tabs.NewPlace
+import com.example.unilocal.ui.theme.screens.user.tabs.PlaceDetail
 import com.example.unilocal.ui.theme.screens.user.tabs.Places
 import com.example.unilocal.ui.theme.screens.user.tabs.Profile
 import com.example.unilocal.ui.theme.screens.user.tabs.Search
@@ -39,16 +41,33 @@ fun ContentUser(
         }
 
         composable<RouteTab.Search>{
-            Search()
+            Search(
+                placesViewModel = placesViewModel,
+                onNavigateToPlaceDetail = { id ->
+                    navController.navigate(RouteTab.PlaceDetail(id))
+                }
+            )
         }
         composable<RouteTab.Places>{
             Places(
-                placesViewModel = placesViewModel
+                placesViewModel = placesViewModel,
+                onNavigateToPlaceDetail = {
+                    navController.navigate(RouteTab.PlaceDetail(it))
+                }
             )
         }
         composable<RouteTab.Profile>{
             Profile()
         }
+        composable<RouteTab.PlaceDetail>{
+            val args = it.toRoute<RouteTab.PlaceDetail>()
+            PlaceDetail(
+                placesViewModel = placesViewModel,
+                id = args.id
+            )
+        }
+
+
     }
 
 }

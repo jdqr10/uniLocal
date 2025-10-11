@@ -2,6 +2,7 @@ package com.example.unilocal.ui.theme.screens
 
 import android.util.Log
 import android.util.Patterns
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,6 +32,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,11 +40,16 @@ import com.example.unilocal.R
 import com.example.unilocal.ui.theme.AppColors
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.unilocal.model.Role
+import com.example.unilocal.model.User
 import com.example.unilocal.ui.theme.components.DropdownMenu
 import com.example.unilocal.ui.theme.components.InputText
+import com.example.unilocal.viewmodel.UsersViewModel
+import java.util.UUID
 
 @Composable
 fun RegisterScreen(
+    usersViewModel: UsersViewModel,
     onNavigateToLogin: () -> Unit = {}
 ) {
     var email by rememberSaveable { mutableStateOf("") }
@@ -56,6 +63,8 @@ fun RegisterScreen(
 
     val countryList = listOf("Colombia", "Peru", "Ecauador", "Brasil", "Bolivia")
     val cityList = listOf("Bogota", "Lima", "Quito", "Caracas", "La Paz")
+
+    val context = LocalContext.current
 
     val fieldModifier = Modifier.width(280.dp)
 
@@ -177,9 +186,20 @@ fun RegisterScreen(
 
             Button(
                 onClick = {
-                    //Validar los campos y si son correctos, navegar a la pantalla de login
-                    // onNavigateToLogin()
-                    Log.d("RegisterScreen", "Nombre: $name, Usuario: $user, Telefono: $phone, Correo: $email, Contraseña: $password, Pais: $country, Ciudad $city")
+                    val user = User(
+                        id = UUID.randomUUID().toString(),
+                        name = name,
+                        username = user,
+                        city = city,
+                        email = email,
+                        role = Role.USER,
+                        password = password
+                    )
+                    usersViewModel.create(
+                        user
+                    )
+                    Toast.makeText(context, "Su registro fue exitoso", Toast.LENGTH_SHORT).show()
+                    onNavigateToLogin()
                 },
 
                 modifier = Modifier.width(290.dp),
