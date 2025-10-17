@@ -75,17 +75,17 @@ fun NewPlace(){
 
             )
 
-            DropdownMenu(
-                label = stringResource(R.string.txt_country),
-                supportingText = stringResource(R.string.txt_country_error),
-                list = categoryList,
-                icon = Icons.Outlined.LocationOn,
-                onValueChange = {
-                    category = it
-                },
-                modifier = Modifier.width(280.dp)
-
-            )
+//            DropdownMenu(
+//                label = stringResource(R.string.txt_country),
+//                supportingText = stringResource(R.string.txt_country_error),
+//                list = categoryList,
+//                icon = Icons.Outlined.LocationOn,
+//                onValueChange = {
+//                    category = it
+//                },
+//                modifier = Modifier.width(280.dp)
+//
+//            )
 
             InputText(
                 value = phone,

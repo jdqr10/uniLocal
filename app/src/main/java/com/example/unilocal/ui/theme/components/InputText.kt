@@ -1,5 +1,7 @@
 package com.example.unilocal.ui.theme.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -14,45 +16,53 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.example.unilocal.R
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun InputText(
     modifier: Modifier = Modifier,
     isPassword: Boolean = false,
-    value : String,
-    label : String,
-    supportingText : String,
-    onValueChange : (String) -> Unit,
-    onValidate : (String) -> Boolean,
-    icon: ImageVector? = null
+    value: String,
+    label: String,
+    multiline: Boolean = false,
+    supportingText: String,
+    onValueChange: (String) -> Unit,
+    onValidate: (String) -> Boolean,
+    icon: ImageVector? = null,
+    enabled: Boolean = true
 ){
+
     var isError by rememberSaveable { mutableStateOf(false) }
 
     OutlinedTextField(
-        // modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth(),
         label = {
             Text(text = label)
         },
         value = value,
+        enabled = enabled,
+        shape = RoundedCornerShape(15.dp),
+        singleLine = !multiline,
+        minLines = if(multiline) 3 else 1,
         isError = isError,
         supportingText = {
-            if (isError){
+            if(isError) {
                 Text(text = supportingText)
             }
         },
-        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+        visualTransformation = if(isPassword) PasswordVisualTransformation() else VisualTransformation.None,
         leadingIcon = {
-            if (icon != null){
+            if(icon != null) {
                 Icon(
                     imageVector = icon,
-                    contentDescription = stringResource(R.string.txt_email)
+                    contentDescription = label
                 )
             }
         },
         onValueChange = {
             onValueChange(it)
             isError = onValidate(it)
-            // isEmailError = email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()
         }
     )
 }

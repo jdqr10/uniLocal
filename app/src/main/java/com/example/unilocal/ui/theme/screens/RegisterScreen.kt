@@ -1,6 +1,5 @@
 package com.example.unilocal.ui.theme.screens
 
-import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,7 +16,6 @@ import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
-import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -40,18 +37,18 @@ import com.example.unilocal.R
 import com.example.unilocal.ui.theme.AppColors
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.unilocal.model.City
 import com.example.unilocal.model.Role
 import com.example.unilocal.model.User
-import com.example.unilocal.ui.theme.components.DropdownMenu
 import com.example.unilocal.ui.theme.components.InputText
-import com.example.unilocal.viewmodel.UsersViewModel
 import java.util.UUID
 
 @Composable
 fun RegisterScreen(
-    usersViewModel: UsersViewModel,
     onNavigateToLogin: () -> Unit = {}
 ) {
+    val usersViewModel = LocalMainViewModel.current.usersViewModel
+
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var user by rememberSaveable { mutableStateOf("") }
@@ -130,17 +127,17 @@ fun RegisterScreen(
                 icon = Icons.Outlined.Phone
             )
 
-            DropdownMenu(
-                label = stringResource(R.string.txt_country),
-                supportingText = stringResource(R.string.txt_country_error),
-                list = countryList,
-                icon = Icons.Outlined.Place,
-
-                onValueChange = {
-                    country = it
-                },
-                modifier = fieldModifier
-            )
+//            DropdownMenu(
+//                label = stringResource(R.string.txt_country),
+//                supportingText = stringResource(R.string.txt_country_error),
+//                list = countryList,
+//                icon = Icons.Outlined.Place,
+//
+//                onValueChange = {
+//                    country = it
+//                },
+//                modifier = fieldModifier
+//            )
 
             InputText(
                 value = email,
@@ -190,7 +187,7 @@ fun RegisterScreen(
                         id = UUID.randomUUID().toString(),
                         name = name,
                         username = user,
-                        city = city,
+                        city = city as City,
                         email = email,
                         role = Role.USER,
                         password = password

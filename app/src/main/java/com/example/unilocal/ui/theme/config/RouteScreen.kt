@@ -1,5 +1,6 @@
 package com.example.unilocal.ui.theme.config
 
+import com.example.unilocal.ui.theme.screens.user.nav.RouteTab
 import kotlinx.serialization.Serializable
 
 sealed class RouteScreen{
@@ -18,5 +19,11 @@ sealed class RouteScreen{
 
     @Serializable
     data object HomeA : RouteScreen()
+
+    @Serializable
+    data class PlaceDetail(val id: String) : RouteScreen()
+
+    @Serializable
+    data object CreatePlace : RouteScreen()
 
 }

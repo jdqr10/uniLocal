@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.unilocal.model.Place
+import com.example.unilocal.ui.theme.screens.LocalMainViewModel
 import com.example.unilocal.viewmodel.PlacesViewModel
 
 // Estado sin hacer 'quemado'
@@ -39,10 +40,11 @@ data class UiPlace(
 
 @Composable
 fun Places(
-    placesViewModel: PlacesViewModel,
     onNavigateToPlaceDetail: (String) -> Unit
 ) {
+    val placesViewModel = LocalMainViewModel.current.placesViewModel
     val places by placesViewModel.places.collectAsState()
+
 
     LazyColumn(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),

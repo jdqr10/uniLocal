@@ -9,9 +9,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.example.unilocal.ui.theme.config.RouteScreen
 import com.example.unilocal.ui.theme.screens.user.tabs.Map
 import com.example.unilocal.ui.theme.screens.user.tabs.NewPlace
-import com.example.unilocal.ui.theme.screens.user.tabs.PlaceDetail
+import com.example.unilocal.ui.theme.screens.places.PlaceDetail
 import com.example.unilocal.ui.theme.screens.user.tabs.Places
 import com.example.unilocal.ui.theme.screens.user.tabs.Profile
 import com.example.unilocal.ui.theme.screens.user.tabs.Search
@@ -21,10 +22,11 @@ import com.example.unilocal.viewmodel.PlacesViewModel
 @Composable
 fun ContentUser(
     padding: PaddingValues,
-    navController: NavHostController
+    navController: NavHostController,
+    onNavigateToPlaceDetail: (String) -> Unit
+
 ){
 
-    val placesViewModel : PlacesViewModel = viewModel()
 
 
     NavHost(
@@ -42,29 +44,16 @@ fun ContentUser(
 
         composable<RouteTab.Search>{
             Search(
-                placesViewModel = placesViewModel,
-                onNavigateToPlaceDetail = { id ->
-                    navController.navigate(RouteTab.PlaceDetail(id))
-                }
+                onNavigateToPlaceDetail = onNavigateToPlaceDetail
             )
         }
         composable<RouteTab.Places>{
             Places(
-                placesViewModel = placesViewModel,
-                onNavigateToPlaceDetail = {
-                    navController.navigate(RouteTab.PlaceDetail(it))
-                }
+                onNavigateToPlaceDetail = onNavigateToPlaceDetail
             )
         }
         composable<RouteTab.Profile>{
             Profile()
-        }
-        composable<RouteTab.PlaceDetail>{
-            val args = it.toRoute<RouteTab.PlaceDetail>()
-            PlaceDetail(
-                placesViewModel = placesViewModel,
-                id = args.id
-            )
         }
 
 

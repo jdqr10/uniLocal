@@ -1,6 +1,7 @@
 package com.example.unilocal.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.unilocal.model.City
 import com.example.unilocal.model.Role
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,7 +25,7 @@ class UsersViewModel: ViewModel (){
                 name = "Admin",
                 username = "admin",
                 role = Role.ADMIN,
-                city = "Armenia",
+                city = City.ARMENIA,
                 email = "admin@gmail.com",
                 password = "123456"
             ),
@@ -33,8 +34,17 @@ class UsersViewModel: ViewModel (){
                 name = "Carlos",
                 username = "carlos123",
                 role = Role.USER,
-                city = "Armenia",
+                city = City.ARMENIA,
                 email = "carlos@gmail.com",
+                password = "123456"
+            ),
+            User(
+                id = "3",
+                name = "Pepito",
+                username = "pepitop",
+                role = Role.USER,
+                city = City.ARMENIA,
+                email = "pepito@gmail.com",
                 password = "123456"
             )
 

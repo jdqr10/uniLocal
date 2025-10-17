@@ -11,6 +11,7 @@
     <string name="txt_create_account">Crear cuenta</string>
 
 
+
     <!-- Formulario Register -->
     <string name="txt_city">Seleccione la ciudad</string>
     <string name="txt_country">Seleccione el pais</string>
@@ -19,6 +20,9 @@
     <string name="txt_phone">Numero de telefono</string>
     <string name="txt_confirmPassword">Confirmar contraseña</string>
     <string name="btn_register">Registrarse</string>
+    <string name="txt_city_error">La ciudad es obligatoria</string>
+    <string name="txt_phone_number">Número de teléfono</string>
+    <string name="txt_phone_number_error">El número de teléfono es obligatorio</string>
 
 
 
@@ -39,7 +43,7 @@
     <string name="txt_menu_search">Busqueda</string>
     <string name="txt_menu_places">Mis lugares</string>
     <string name="txt_menu_profile">Perfil</string>
-    <string name="title_admin">Moderacion</string>
+<!--    <string name="title_admin">Moderacion</string>-->
     <string name="txt_menu_new_place">Crear lugar</string>
 
     <!-- CreatePlace Form -->
@@ -52,6 +56,43 @@
     <!-- Update profile -->
     <string name="txt_update_profile">Actualizar datos</string>
     <string name="btn_update_profile">Confirmar</string>"
+
+    <!-- Formulario de Crear lugar -->
+    <string name="txt_title">Nombre del lugar</string>
+    <string name="txt_title_error">El nombre del lugar es obligatorio</string>
+    <string name="txt_description">Descripción</string>
+    <string name="txt_description_error">La descripción del lugar es obligatoria</string>
+    <string name="txt_address">Dirección</string>
+    <string name="txt_address_error">La dirección del lugar es obligatoria</string>
+    <string name="txt_category">Seleccione la categoría</string>
+    <string name="txt_category_error">La categoría del lugar es obligatoria</string>
+    <string name="btn_create_place">Crear lugar</string>
+    <string name="title_create_place">Crear nuevo lugar</string>
+
+    <string name="title_user">Inicio usuario</string>
+    <string name="menu_home">Inicio</string>
+    <string name="menu_search">Búsqueda</string>
+    <string name="menu_my_places">Mis lugares</string>
+    <string name="menu_profile">Perfil</string>
+
+    <string name="title_admin">Inicio administrador</string>
+    <string name="txt_save">Guardar cambios</string>
+    <string name="txt_edit">Editar datos</string>
+    <string name="title_general_info">1. Información general</string>
+    <string name="title_upload_photos">2. Imágenes</string>
+    <string name="title_location">4. Ubicación</string>
+    <string name="title_schedule">3. Horarios</string>
+    <string name="add">Agregar</string>
+
+    <string name="txt_open">Abierto</string>
+    <string name="txt_close">Cerrado</string>
+    <string name="txt_search">Buscar</string>
+    <string name="txt_no_results">No hay resultados</string>
+    <string name="detail_schedule">Horarios</string>
+    <string name="detail_details">Detalles</string>
+    <string name="detail_city">Ciudad</string>
+    <string name="detail_address">Dirección</string>
+    <string name="detail_phoneNumber">Teléfono</string>
 
 
 </resources>

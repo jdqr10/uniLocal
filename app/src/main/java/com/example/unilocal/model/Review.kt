@@ -5,6 +5,7 @@ import java.time.LocalDateTime
 class Review(
     val id: String,
     val userID: String,
+    val username: String,
     val placeID: String,
     val rating: Int,
     val comment: String,

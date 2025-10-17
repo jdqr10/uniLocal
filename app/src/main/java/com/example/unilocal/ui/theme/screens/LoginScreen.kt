@@ -40,14 +40,16 @@ import com.example.unilocal.R
 import com.example.unilocal.ui.theme.AppColors
 import com.example.unilocal.ui.theme.components.InputText
 import com.example.unilocal.viewmodel.UsersViewModel
+import com.example.unilocal.model.Role
 
 
 @Composable
 fun LoginScreen(
-    usersViewModel: UsersViewModel,
-    onNavigateToRegister: () -> Unit = {},
-    onNavigateToHome: () -> Unit = {}
+    onNavigateToRegister: () -> Unit ,
+    onNavigateToHome: (String, Role) -> Unit
 ) {
+    val usersViewModel = LocalMainViewModel.current.usersViewModel
+
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
 
@@ -114,7 +116,7 @@ fun LoginScreen(
                     val userLoged = usersViewModel.login(email, password)
 
                     if (userLoged != null) {
-                        onNavigateToHome()
+                        onNavigateToHome(userLoged.id, userLoged.role)
                         Toast.makeText(context, "Bienvenido", Toast.LENGTH_SHORT).show()
                     }else{
                         Toast.makeText(

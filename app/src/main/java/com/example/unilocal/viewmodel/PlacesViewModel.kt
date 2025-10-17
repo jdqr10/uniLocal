@@ -29,10 +29,11 @@ class PlacesViewModel: ViewModel() {
                 address = "Cra 12 #12 - 12",
                 location = Location(1.0, 2.0),
                 images = listOf("https://elbalconpaisa.com/images/about-img-1.png"),
-                phones = listOf("123456789", "987654321"),
-                type = PlaceType.RESTAURANTE,
+                phoneNumber = "3123123123",
+                type = PlaceType.RESTAURANT,
                 city = City.MANIZALES,
-                schedules = listOf()
+                schedules = listOf(),
+                ownerId = "2"
             ),
             Place(
                 id = "2",
@@ -41,10 +42,11 @@ class PlacesViewModel: ViewModel() {
                 address = "Cra 12 #12 - 12",
                 location = Location(1.0, 2.0),
                 images = listOf("https://lh3.googleusercontent.com/p/AF1QipPkxI4q-E6KVzrCayGPMgtkrWG7TYTq4fkwjeUU=s1360-w1360-h1020"),
-                phones = listOf("123456789", "987654321"),
-                type = PlaceType.CAFETERIA,
+                phoneNumber = "3123123123",
+                type = PlaceType.COFFE,
                 city = City.ARMENIA,
-                schedules = listOf()
+                schedules = listOf(),
+                ownerId = "2"
             ),
             Place(
                 id = "3",
@@ -53,10 +55,11 @@ class PlacesViewModel: ViewModel() {
                 address = "Calle 12 # 12 - 12",
                 location = Location(1.23, 2.34),
                 images = listOf("https://cdn0.uncomo.com/es/posts/6/8/4/como_gestionar_un_bar_22486_orig.jpg"),
-                phones = listOf("123456789", "987654321"),
+                phoneNumber = "3123123123",
                 type = PlaceType.HOTEL,
                 city = City.PEREIRA,
-                schedules = listOf()
+                schedules = listOf(),
+                ownerId = "2"
             ),
             Place(
                 id = "4",
@@ -65,10 +68,11 @@ class PlacesViewModel: ViewModel() {
                 address = "Calle 12 # 12 - 12",
                 location = Location(1.23, 2.34),
                 images = listOf("https://cdn0.uncomo.com/es/posts/6/8/4/como_gestionar_un_bar_22486_orig.jpg"),
-                phones = listOf("123456789", "987654321"),
+                phoneNumber = "3123123123",
                 type = PlaceType.SHOPPING,
                 city = City.MEDELLIN,
-                schedules = listOf()
+                schedules = listOf(),
+                ownerId = "3"
             ),
             Place(
                 id = "5",
@@ -77,10 +81,11 @@ class PlacesViewModel: ViewModel() {
                 address = "Calle 12 # 12 - 12",
                 location = Location(1.23, 2.34),
                 images = listOf("https://cdn0.uncomo.com/es/posts/6/8/4/como_gestionar_un_bar_22486_orig.jpg"),
-                phones = listOf("123456789", "987654321"),
+                phoneNumber = "3123123123",
                 type = PlaceType.SHOPPING,
                 city = City.BOGOTA,
-                schedules = listOf()
+                schedules = listOf(),
+                ownerId = "3"
             ),
             Place(
                 id = "6",
@@ -89,22 +94,11 @@ class PlacesViewModel: ViewModel() {
                 address = "Calle 12 # 12 - 12",
                 location = Location(1.23, 2.34),
                 images = listOf("https://cdn0.uncomo.com/es/posts/6/8/4/como_gestionar_un_bar_22486_orig.jpg"),
-                phones = listOf("123456789", "987654321"),
+                phoneNumber = "3123123123",
                 type = PlaceType.PARK,
                 city = City.BOGOTA,
-                schedules = listOf()
-            ),
-            Place(
-                id = "7",
-                title = "Parque de prueba",
-                description = "Un bar test",
-                address = "Calle 12 # 12 - 12",
-                location = Location(1.23, 2.34),
-                images = listOf("https://cdn0.uncomo.com/es/posts/6/8/4/como_gestionar_un_bar_22486_orig.jpg"),
-                phones = listOf("123456789", "987654321"),
-                type = PlaceType.PARK,
-                city = City.BOGOTA,
-                schedules = listOf()
+                schedules = listOf(),
+                ownerId = "3"
             )
         )
 

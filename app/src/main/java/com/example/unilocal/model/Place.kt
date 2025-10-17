@@ -11,9 +11,10 @@ class Place(
     val city: City,
     val location: Location,
     val images: List<String>,
-    val phones: List<String>,
+    val phoneNumber: String,
     val type: PlaceType,
     val schedules: List<Schedule>,
+    val ownerId: String
 ){
 
     fun isOpen():Boolean{
