@@ -27,7 +27,7 @@ class PlacesViewModel: ViewModel() {
                 title = "Restaurante El paisa",
                 description = "Descripción del restaurante 1",
                 address = "Cra 12 #12 - 12",
-                location = Location(1.0, 2.0),
+                location = Location(4.5380, -75.6725), // Armenia
                 images = listOf("https://elbalconpaisa.com/images/about-img-1.png"),
                 phoneNumber = "3123123123",
                 type = PlaceType.RESTAURANT,
@@ -40,7 +40,7 @@ class PlacesViewModel: ViewModel() {
                 title = "Caturro",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
                 address = "Cra 12 #12 - 12",
-                location = Location(1.0, 2.0),
+                location = Location(4.5372, -75.6664), // Armenia
                 images = listOf("https://lh3.googleusercontent.com/p/AF1QipPkxI4q-E6KVzrCayGPMgtkrWG7TYTq4fkwjeUU=s1360-w1360-h1020"),
                 phoneNumber = "3123123123",
                 type = PlaceType.COFFE,
@@ -53,7 +53,7 @@ class PlacesViewModel: ViewModel() {
                 title = "Hotel de prueba",
                 description = "Un bar test",
                 address = "Calle 12 # 12 - 12",
-                location = Location(1.23, 2.34),
+                location = Location(4.8143, -75.6946), // Pereira
                 images = listOf("https://cdn0.uncomo.com/es/posts/6/8/4/como_gestionar_un_bar_22486_orig.jpg"),
                 phoneNumber = "3123123123",
                 type = PlaceType.HOTEL,
@@ -66,7 +66,7 @@ class PlacesViewModel: ViewModel() {
                 title = "Shopping test 1",
                 description = "Un bar test",
                 address = "Calle 12 # 12 - 12",
-                location = Location(1.23, 2.34),
+                location = Location(6.2088, -75.5705), // Medellín
                 images = listOf("https://cdn0.uncomo.com/es/posts/6/8/4/como_gestionar_un_bar_22486_orig.jpg"),
                 phoneNumber = "3123123123",
                 type = PlaceType.SHOPPING,
@@ -79,7 +79,7 @@ class PlacesViewModel: ViewModel() {
                 title = "Shopping test 2",
                 description = "Un bar test",
                 address = "Calle 12 # 12 - 12",
-                location = Location(1.23, 2.34),
+                location = Location(4.7171, -74.0460), // Bogotá norte
                 images = listOf("https://cdn0.uncomo.com/es/posts/6/8/4/como_gestionar_un_bar_22486_orig.jpg"),
                 phoneNumber = "3123123123",
                 type = PlaceType.SHOPPING,
@@ -92,7 +92,7 @@ class PlacesViewModel: ViewModel() {
                 title = "Parque de prueba",
                 description = "Un bar test",
                 address = "Calle 12 # 12 - 12",
-                location = Location(1.23, 2.34),
+                location = Location(4.6486, -74.0566), // Parque Nacional, Bogotá
                 images = listOf("https://cdn0.uncomo.com/es/posts/6/8/4/como_gestionar_un_bar_22486_orig.jpg"),
                 phoneNumber = "3123123123",
                 type = PlaceType.PARK,

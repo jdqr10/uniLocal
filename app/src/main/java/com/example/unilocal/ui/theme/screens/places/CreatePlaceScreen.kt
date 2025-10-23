@@ -1,6 +1,7 @@
 package com.example.unilocal.ui.theme.screens.places
 
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -47,6 +48,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,7 +71,8 @@ import com.example.unilocal.model.Place
 import com.example.unilocal.model.Schedule
 import com.example.unilocal.ui.theme.components.DropdownMenu
 import com.example.unilocal.ui.theme.components.InputText
-
+import com.example.unilocal.ui.theme.components.Map
+import com.mapbox.geojson.Point
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,6 +82,7 @@ fun CreatePlaceScreen(
     onNavigateBack: () -> Unit
 ){
 
+    var clickedPoint by rememberSaveable { mutableStateOf<Point?>(null) }
     var city by remember { mutableStateOf<DisplayableEnum>(City.ARMENIA) }
     val cities = City.entries
 
@@ -298,35 +302,38 @@ fun CreatePlaceScreen(
                     title = stringResource(R.string.title_location)
                 )
 
-                Image(
+                Map (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(150.dp)
-                        .clip(RoundedCornerShape(16.dp)),
-                    painter = painterResource(R.drawable.map),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth
+                        .height(300.dp),
+                    activateClick = true,
+                    onMapClickListener = {l ->
+                        clickedPoint = l
+                    }
                 )
 
 
                 Button(
                     onClick = {
 
-                        val place = Place(
-                            id = UUID.randomUUID().toString(),
-                            title = title,
-                            description = description,
-                            address = address,
-                            city = city as City,
-                            location = Location(1.0, 1.0),
-                            images = listOf(),
-                            phoneNumber = phoneNumber,
-                            type = type as PlaceType,
-                            schedules = schedule,
-                            ownerId = userId ?: ""
-                        )
+                        if(clickedPoint != null){
+                            val place = Place(
+                                id = UUID.randomUUID().toString(),
+                                title = title,
+                                description = description,
+                                address = address,
+                                city = city as City,
+                                location = Location(clickedPoint!!.latitude(), clickedPoint!!.longitude()),
+                                images = listOf(),
+                                phoneNumber = phoneNumber,
+                                type = type as PlaceType,
+                                schedules = schedule,
+                                ownerId = userId ?: ""
+                            )
 
-                        Log.d("CREATE", place.toString())
+                            Log.d("CREATE", place.toString())
+
+                        }
 
                     }
                 ) {
