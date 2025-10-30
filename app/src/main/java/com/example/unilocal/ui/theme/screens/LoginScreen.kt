@@ -33,6 +33,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
@@ -41,6 +43,7 @@ import com.example.unilocal.ui.theme.AppColors
 import com.example.unilocal.ui.theme.components.InputText
 import com.example.unilocal.viewmodel.UsersViewModel
 import com.example.unilocal.model.Role
+import com.example.unilocal.ui.theme.components.OperationResultHandler
 
 
 @Composable
@@ -49,6 +52,7 @@ fun LoginScreen(
     onNavigateToHome: (String, Role) -> Unit
 ) {
     val usersViewModel = LocalMainViewModel.current.usersViewModel
+    val userResult by usersViewModel.userResult.collectAsState()
 
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -113,17 +117,9 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    val userLoged = usersViewModel.login(email, password)
+                     usersViewModel.login(email, password)
 
-                    if (userLoged != null) {
-                        onNavigateToHome(userLoged.id, userLoged.role)
-                        Toast.makeText(context, "Bienvenido", Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(
-                            context,
-                            "Credenciales incorrectas",
-                            Toast.LENGTH_SHORT).show()
-                    }
+
                 },
 
                 modifier = Modifier.width(290.dp),
@@ -142,6 +138,8 @@ fun LoginScreen(
                     )
                 }
             )
+
+
 
             Button(
                 onClick = {
@@ -164,6 +162,19 @@ fun LoginScreen(
                     )
                 }
             )
+
+            OperationResultHandler(
+                result = userResult,
+                onSuccess = {
+                    onNavigateToHome(usersViewModel.currentUser.value!!.id, usersViewModel.currentUser.value!!.role)
+                    usersViewModel.resetOperationResult()
+                },
+                onFailure = {
+                    usersViewModel.resetOperationResult()
+                }
+            )
+
+
         }
     }
 

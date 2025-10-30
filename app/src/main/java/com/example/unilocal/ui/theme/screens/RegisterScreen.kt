@@ -16,12 +16,14 @@ import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
+import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,9 +40,12 @@ import com.example.unilocal.ui.theme.AppColors
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.unilocal.model.City
+import com.example.unilocal.model.DisplayableEnum
 import com.example.unilocal.model.Role
 import com.example.unilocal.model.User
+import com.example.unilocal.ui.theme.components.DropdownMenu
 import com.example.unilocal.ui.theme.components.InputText
+import com.example.unilocal.ui.theme.components.OperationResultHandler
 import java.util.UUID
 
 @Composable
@@ -48,6 +53,8 @@ fun RegisterScreen(
     onNavigateToLogin: () -> Unit = {}
 ) {
     val usersViewModel = LocalMainViewModel.current.usersViewModel
+    val userResult by usersViewModel.userResult.collectAsState()
+
 
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -55,7 +62,8 @@ fun RegisterScreen(
     var name by rememberSaveable { mutableStateOf("") }
     var phone by rememberSaveable { mutableStateOf("") }
     var confirmPassword by rememberSaveable { mutableStateOf("") }
-    var city by remember { mutableStateOf("") }
+    var city by remember { mutableStateOf<DisplayableEnum>(City.ARMENIA) }
+    val cities = City.entries
     var country by remember { mutableStateOf("") }
 
     val countryList = listOf("Colombia", "Peru", "Ecauador", "Brasil", "Bolivia")
@@ -112,6 +120,16 @@ fun RegisterScreen(
                     user.isBlank()
                 },
                 icon = Icons.Outlined.Person
+            )
+
+            DropdownMenu(
+                label = stringResource(R.string.txt_city),
+                supportingText = stringResource(R.string.txt_city_error),
+                list = cities,
+                icon = Icons.Outlined.Place,
+                onValueChange = {
+                    city = it
+                }
             )
 
             InputText(
@@ -195,8 +213,7 @@ fun RegisterScreen(
                     usersViewModel.create(
                         user
                     )
-                    Toast.makeText(context, "Su registro fue exitoso", Toast.LENGTH_SHORT).show()
-                    onNavigateToLogin()
+//                    Toast.makeText(context, "Su registro fue exitoso", Toast.LENGTH_SHORT).show()
                 },
 
                 modifier = Modifier.width(290.dp),
@@ -213,6 +230,17 @@ fun RegisterScreen(
                     Text(
                         text = stringResource(R.string.btn_register),
                     )
+                }
+            )
+
+            OperationResultHandler(
+                result = userResult,
+                onSuccess = {
+                    onNavigateToLogin()
+                    usersViewModel.resetOperationResult()
+                },
+                onFailure = {
+                    usersViewModel.resetOperationResult()
                 }
             )
 
