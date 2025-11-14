@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import com.example.unilocal.model.User
 import com.example.unilocal.utils.RequestResult
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -28,6 +29,8 @@ class UsersViewModel: ViewModel (){
 
 
     val db = Firebase.firestore
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
 
     init{
         loadUsers()
@@ -45,8 +48,18 @@ class UsersViewModel: ViewModel (){
     }
 
     private suspend fun createFirebase(user: User){
+        val newUser = auth.createUserWithEmailAndPassword(user.email, user.password).await()
+        val uid = newUser.user?.uid ?: throw Exception("No se pudo crear el usuario")
+
+
+        val userCopy = user.copy(
+            id = uid,
+            password = ""
+        )
+
         db.collection("users")
-            .add(user)
+            .document(uid)
+            .set(userCopy)
             .await()
     }
 
@@ -95,22 +108,14 @@ class UsersViewModel: ViewModel (){
     }
 
     private suspend fun loginFirebase(email: String, password: String){ //Esto sera cambiado mas adelante
-        val snapshot = db.collection("users")
-            .whereEqualTo("email", email)
-            .whereEqualTo("password", password)
-            .get()
-            .await()
+        val responseUser =  auth.signInWithEmailAndPassword(email, password).await()
+        val uid = responseUser.user?.uid ?: throw Exception("No se pudo obtener el usuario")
+        findById(uid)
+    }
 
-        if(snapshot.documents.isEmpty()){
-           throw Exception("Usuario o contraseña incorrectos")
-        }else {
-            snapshot.documents.mapNotNull {
-                var user = it.toObject(User::class.java)?.apply {
-                    this.id = it.id
-                }
-                _currentUser.value = user
-            }
-        }
+    fun logout(){
+        auth.signOut()
+        _currentUser.value = null
     }
 
 

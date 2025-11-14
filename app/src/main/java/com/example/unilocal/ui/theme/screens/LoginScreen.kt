@@ -33,6 +33,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
@@ -115,6 +116,17 @@ fun LoginScreen(
                 icon = Icons.Outlined.Lock
             )
 
+            TextButton(
+                onClick = {
+                    onNavigateToRegister()
+                },
+                content = {
+                    Text(
+                        text = stringResource(R.string.btn_create_account)
+                    )
+                }
+            )
+
             Button(
                 onClick = {
                      usersViewModel.login(email, password)
@@ -141,27 +153,27 @@ fun LoginScreen(
 
 
 
-            Button(
-                onClick = {
-                   onNavigateToRegister()
-                },
-
-                modifier = Modifier.width(290.dp),
-                shape = RoundedCornerShape(5.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = AppColors.Blue
-                ),
-                content = {
-                    Icon(
-                        imageVector = Icons.Outlined.AddCircle,
-                        contentDescription = stringResource(R.string.btn_create_account)
-                    )
-                    Spacer(modifier = Modifier.width(5.dp))
-                    Text(
-                        text = stringResource(R.string.btn_create_account),
-                    )
-                }
-            )
+//            Button(
+//                onClick = {
+//                   onNavigateToRegister()
+//                },
+//
+//                modifier = Modifier.width(290.dp),
+//                shape = RoundedCornerShape(5.dp),
+//                colors = ButtonDefaults.buttonColors(
+//                    containerColor = AppColors.Blue
+//                ),
+//                content = {
+//                    Icon(
+//                        imageVector = Icons.Outlined.AddCircle,
+//                        contentDescription = stringResource(R.string.btn_create_account)
+//                    )
+//                    Spacer(modifier = Modifier.width(5.dp))
+//                    Text(
+//                        text = stringResource(R.string.btn_create_account),
+//                    )
+//                }
+//            )
 
             OperationResultHandler(
                 result = userResult,

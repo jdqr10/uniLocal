@@ -1,9 +1,11 @@
 package com.example.unilocal.ui.theme.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import com.example.unilocal.utils.RequestResult
 import kotlinx.coroutines.delay
 
@@ -17,19 +19,18 @@ fun OperationResultHandler(
     when (result)
     {
         is RequestResult.Loading -> {
-        LinearProgressIndicator()
+        LinearProgressIndicator(
+            modifier = Modifier
+                .fillMaxWidth()
+        )
     }
         is RequestResult.Success -> {
-//        AlertMesagge(type = AlertType.SUCCESS, message = result.message)
-            Text(
-                text = result.message
-            )
+        AlertMesagge(type = AlertType.SUCCESS, message = result.message)
+
     }
         is RequestResult.Failure -> {
-//        AlertMesagge(type = AlertType.ERROR, message = result.errorMessage)
-            Text(
-                text = result.errorMessage
-            )
+       AlertMesagge(type = AlertType.ERROR, message = result.errorMessage)
+
     }
         else ->{}
     }

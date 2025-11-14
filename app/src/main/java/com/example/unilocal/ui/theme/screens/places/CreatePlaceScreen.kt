@@ -1,8 +1,14 @@
 package com.example.unilocal.ui.theme.screens.places
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -44,10 +50,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -55,10 +63,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import coil.compose.AsyncImage
+import com.cloudinary.Cloudinary
+import com.cloudinary.utils.ObjectUtils
 import com.example.unilocal.model.City
 import com.example.unilocal.model.DisplayableEnum
 import com.example.unilocal.model.PlaceType
@@ -72,7 +85,12 @@ import com.example.unilocal.model.Schedule
 import com.example.unilocal.ui.theme.components.DropdownMenu
 import com.example.unilocal.ui.theme.components.InputText
 import com.example.unilocal.ui.theme.components.Map
+import com.example.unilocal.ui.theme.components.OperationResultHandler
+import com.example.unilocal.ui.theme.screens.LocalMainViewModel
 import com.mapbox.geojson.Point
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.Date
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -82,6 +100,15 @@ fun CreatePlaceScreen(
     onNavigateBack: () -> Unit
 ){
 
+
+    val context = LocalContext.current
+
+    var image by remember { mutableStateOf("") }
+
+    val placeViewModel = LocalMainViewModel.current.placesViewModel
+    val placeResult by placeViewModel.placeResult.collectAsState()
+
+
     var clickedPoint by rememberSaveable { mutableStateOf<Point?>(null) }
     var city by remember { mutableStateOf<DisplayableEnum>(City.ARMENIA) }
     val cities = City.entries
@@ -90,7 +117,7 @@ fun CreatePlaceScreen(
     val types = PlaceType.entries
 
     val schedule = remember { mutableStateListOf(
-        Schedule(DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(18, 0))
+        Schedule(DayOfWeek.MONDAY, Date(), Date()) //LocalTime.of(9, 0), LocalTime.of(18, 0))
     ) }
 
     var title by remember { mutableStateOf("") }
@@ -98,6 +125,50 @@ fun CreatePlaceScreen(
     var description by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
     var showExitDialog by remember { mutableStateOf(false) }
+
+    val config = mapOf(
+        "cloud_name" to "dg20g8ffd",
+        "api_key" to "325721746529343",
+        "api_secret" to "mSP_k1BcLKWnfuAxpR4Zq7xNCiw"
+    )
+
+    val scope = rememberCoroutineScope()
+    val cloudinary = Cloudinary(config)
+
+    val fileLaucher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+    ){ uri: Uri? ->
+        uri?.let{
+            scope.launch(Dispatchers.IO){
+                val inputStream = context.contentResolver.openInputStream(it)
+                inputStream?.use { stream ->
+                    val result = cloudinary.uploader().upload(stream, ObjectUtils.emptyMap())
+                    val imageUrl = result["secure_url"].toString()
+                    image = imageUrl
+                }
+            }
+        }
+
+    }
+
+    val permissonLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ){
+        if(it){
+            Toast.makeText(
+                context,
+                "Permiso concedido",
+                Toast.LENGTH_SHORT
+            ).show()
+        }else{
+            Toast.makeText(
+                context,
+                "Permiso denegado",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
 
 
     BackHandler(
@@ -233,17 +304,38 @@ fun CreatePlaceScreen(
 
                     OutlinedButton(
                         onClick = {
+                            val permissonCheckResult = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES)
+                            }else{
+                                ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            }
 
+                            if(permissonCheckResult == PackageManager.PERMISSION_GRANTED){
+                                fileLaucher.launch("image/*")
+                            }else{
+                                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                    permissonLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+                                }else{
+                                    permissonLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                }
+                            }
                         },
+
                         modifier = Modifier.size(70.dp),
                         shape = RoundedCornerShape(16.dp),
-                        contentPadding = PaddingValues(0.dp) // sin padding extra, icono centrado
+                        contentPadding = PaddingValues(0.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.AddAPhoto,
                             contentDescription = null
                         )
                     }
+
+                    AsyncImage(
+                        modifier = Modifier.width(120.dp).height(100.dp).clip(RoundedCornerShape(16.dp)),
+                        model = image,
+                        contentDescription = null,
+                    )
 
                 }
 
@@ -265,7 +357,7 @@ fun CreatePlaceScreen(
                         },
                         modifier = Modifier.size(70.dp),
                         shape = RoundedCornerShape(16.dp),
-                        contentPadding = PaddingValues(0.dp) // sin padding extra, icono centrado
+                        contentPadding = PaddingValues(0.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Schedule,
@@ -312,26 +404,38 @@ fun CreatePlaceScreen(
                     }
                 )
 
+                OperationResultHandler(
+                    result = placeResult,
+                    onSuccess = {
+                        onNavigateBack()
+                        placeViewModel.resetOperationResult()
+                    },
+                    onFailure = {
+                        placeViewModel.resetOperationResult()
+                    }
+                )
+
 
                 Button(
                     onClick = {
 
                         if(clickedPoint != null){
                             val place = Place(
-                                id = UUID.randomUUID().toString(),
+                                id = "",
                                 title = title,
                                 description = description,
                                 address = address,
                                 city = city as City,
                                 location = Location(clickedPoint!!.latitude(), clickedPoint!!.longitude()),
-                                images = listOf(),
+                                images = listOf(image),
                                 phoneNumber = phoneNumber,
                                 type = type as PlaceType,
                                 schedules = schedule,
                                 ownerId = userId ?: ""
                             )
 
-                            Log.d("CREATE", place.toString())
+                            placeViewModel.create(place)
+
 
                         }
 
@@ -344,6 +448,8 @@ fun CreatePlaceScreen(
                     Spacer(modifier = Modifier.width(5.dp))
                     Text(text = stringResource(R.string.btn_create_place))
                 }
+
+
 
             }
 
@@ -387,6 +493,11 @@ fun CreatePlaceScreen(
     }
 
 }
+
+//@Composable
+//fun Cloudinary(x0: Map<String, String>) {
+//    TODO("Not yet implemented")
+//}
 
 @Composable
 fun TitleForm(

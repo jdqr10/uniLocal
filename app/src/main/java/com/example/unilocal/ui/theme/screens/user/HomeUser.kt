@@ -27,6 +27,7 @@ import com.example.unilocal.ui.theme.screens.user.nav.bottombar.BottomBaUser
 
 @Composable
 fun HomeUser(
+    userId : String,
     logout: () -> Unit,
     onNavigateToCreatePlace: () -> Unit,
     onNavigateToPlaceDetail: (String) -> Unit
@@ -69,6 +70,7 @@ fun HomeUser(
         }
     ) { padding ->
         ContentUser(
+            userId = userId,
             navController = navController,
             padding = padding,
             onNavigateToPlaceDetail = onNavigateToPlaceDetail

@@ -21,6 +21,7 @@ import com.example.unilocal.viewmodel.PlacesViewModel
 
 @Composable
 fun ContentUser(
+    userId: String,
     padding: PaddingValues,
     navController: NavHostController,
     onNavigateToPlaceDetail: (String) -> Unit
@@ -49,6 +50,7 @@ fun ContentUser(
         }
         composable<RouteTab.Places>{
             Places(
+                userId = userId,
                 onNavigateToPlaceDetail = onNavigateToPlaceDetail
             )
         }

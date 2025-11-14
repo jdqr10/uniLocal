@@ -9,6 +9,7 @@
     <string name="txt_email_error">El correo es obligatorio y debe ser valido</string>
     <string name="txt_password_error">La contraseña debe de tener al menos 5 caracteres</string>
     <string name="txt_create_account">Crear cuenta</string>
+    <string name="btn_create_account">¿Aún no tienes una cuenta? Registrate aquí</string>
 
 
 
@@ -35,7 +36,7 @@
     <string name="btn_inicio_sesion">Iniciar sesion</string>
     <string name="txt_register_account">Crea tu cuenta</string>
     <string name="txt_country_error">El pais no debe quedar vacio</string>
-    <string name="btn_create_account">Crear cuenta</string>
+<!--    <string name="btn_create_account">Crear cuenta</string>-->
 
     <!-- HomeUser -->
     <string name="title_usere">Inicio usuario</string>

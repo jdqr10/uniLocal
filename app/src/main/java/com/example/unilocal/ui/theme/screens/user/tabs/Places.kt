@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -40,17 +41,24 @@ data class UiPlace(
 
 @Composable
 fun Places(
+    userId: String,
     onNavigateToPlaceDetail: (String) -> Unit
 ) {
     val placesViewModel = LocalMainViewModel.current.placesViewModel
-    val places by placesViewModel.places.collectAsState()
+
+
+    LaunchedEffect(userId) {
+        placesViewModel.getMyPlaces(userId)
+    }
+
+    val myPlaces by placesViewModel.myPlaces.collectAsState()
 
 
     LazyColumn(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(items = places, key = { it.id }) { p: Place ->
+        items(items = myPlaces, key = { it.id }) { p: Place ->
 
 
             val ui = UiPlace(
@@ -58,7 +66,7 @@ fun Places(
                 title = p.title,
                 address = p.address,
                 status = PlaceStatus.PENDIENTE,
-                thumbnail = p.images.firstOrNull().orEmpty(),
+                thumbnail = p.images?.firstOrNull().orEmpty(), //p.images.firstOrNull().orEmpty(),
                 description = p.description
             )
 

@@ -4,17 +4,17 @@ import java.time.LocalDateTime
 import kotlin.toString
 
 class Place(
-    val id: String,
-    val title: String,
-    val description: String,
-    val address: String,
-    val city: City,
-    val location: Location,
-    val images: List<String>,
-    val phoneNumber: String,
-    val type: PlaceType,
-    val schedules: List<Schedule>,
-    val ownerId: String
+    var id: String = "",
+    val title: String = "",
+    val description: String = "",
+    val address: String = "",
+    val city: City = City.DEFAULT,
+    val location: Location = Location(),
+    val images: List<String> = emptyList<String>(),
+    val phoneNumber: String = "",
+    val type: PlaceType = PlaceType.DEFAULT,
+    val schedules: List<Schedule> = emptyList<Schedule>(),
+    val ownerId: String = ""
 ){
 
     fun isOpen():Boolean{
@@ -30,7 +30,7 @@ class Place(
             return false
         }
 
-        return now.toLocalTime().isAfter(schedule.open) && now.toLocalTime().isBefore(schedule.close)
+        return true  //now.toLocalTime().isAfter(schedule.open) && now.toLocalTime().isBefore(schedule.close)
     }
 
     fun hourClosed(): String{

@@ -50,6 +50,8 @@ fun Search(
     val focusManager = LocalFocusManager.current
 
     val placesViewModel = LocalMainViewModel.current.placesViewModel
+    placesViewModel.getAll()
+
     val places by placesViewModel.places.collectAsState()
 
     // Filtrado en vivo (case-insensitive). Si query vacío -> todos
