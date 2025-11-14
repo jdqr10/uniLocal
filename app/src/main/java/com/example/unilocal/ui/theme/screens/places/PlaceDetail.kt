@@ -50,6 +50,7 @@ fun PlaceDetail(
 
     val place by placesViewModel.currentPlace.collectAsState()
     val reviews by reviewsViewModel.reviews.collectAsState()
+    val currentUser by usersViewModel.currentUser.collectAsState()
 
 
     val images = place?.images ?: emptyList()
@@ -198,6 +199,8 @@ fun PlaceDetail(
                     CreateCommentForm(
                         placeId = placeId,
                         userId = userId,
+                        userName = currentUser?.name?.takeIf { it.isNotBlank() }
+                            ?: currentUser?.username,
                         onCreateReview = { review ->
                             reviewsViewModel.create(review)
                         }
@@ -232,6 +235,7 @@ fun CommentsList(
 fun CreateCommentForm(
     placeId: String,
     userId: String?,
+    userName: String?,
     onCreateReview: (Review) -> Unit
 ) {
     var comment by remember { mutableStateOf("") }
@@ -258,7 +262,7 @@ fun CreateCommentForm(
                 val review = Review(
                     id = UUID.randomUUID().toString(),
                     userID = userId ?: "",
-                    username = "User", // luego puedes usar el nombre real
+                    username = userName?.takeIf { it.isNotBlank() } ?: "User",
                     placeID = placeId,
                     rating = 5, // luego puedes conectar con tus estrellas
                     comment = comment,

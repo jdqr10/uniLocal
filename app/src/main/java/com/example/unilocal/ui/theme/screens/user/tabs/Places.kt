@@ -28,7 +28,7 @@ import com.example.unilocal.ui.theme.screens.LocalMainViewModel
 import com.example.unilocal.viewmodel.PlacesViewModel
 
 // Estado sin hacer 'quemado'
-enum class PlaceStatus { APROBADO, PENDIENTE }
+enum class PlaceStatus { APROBADO, PENDIENTE, RECHAZADO }
 
 data class UiPlace(
     val id: String,
@@ -65,7 +65,11 @@ fun Places(
                 id = p.id,
                 title = p.title,
                 address = p.address,
-                status = PlaceStatus.PENDIENTE,
+                status = when (p.status.lowercase()) {
+                    Place.STATUS_AUTHORIZED.lowercase() -> PlaceStatus.APROBADO
+                    Place.STATUS_REJECTED.lowercase() -> PlaceStatus.RECHAZADO
+                    else -> PlaceStatus.PENDIENTE
+                },
                 thumbnail = p.images?.firstOrNull().orEmpty(), //p.images.firstOrNull().orEmpty(),
                 description = p.description
             )
@@ -154,6 +158,7 @@ private fun StatusChip(status: PlaceStatus) {
     val (bg, label) = when (status) {
         PlaceStatus.APROBADO -> Color(0xFF2E7D32) to "APROBADO"
         PlaceStatus.PENDIENTE -> Color(0xFFEF6C00) to "PENDIENTE"
+        PlaceStatus.RECHAZADO -> Color(0xFFC62828) to "RECHAZADO"
     }
     Box(
         modifier = Modifier

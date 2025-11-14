@@ -30,6 +30,9 @@ class PlacesViewModel: ViewModel() {
     private val _placeResult = MutableStateFlow<RequestResult?>(null)
     val placeResult: StateFlow<RequestResult?> = _placeResult.asStateFlow()
 
+    private val _moderationResult = MutableStateFlow<RequestResult?>(null)
+    val moderationResult: StateFlow<RequestResult?> = _moderationResult.asStateFlow()
+
     private val _currentPlace = MutableStateFlow<Place?>(null)
     val currentPlace: StateFlow<Place?> = _currentPlace.asStateFlow()
 
@@ -79,6 +82,7 @@ class PlacesViewModel: ViewModel() {
     fun create(place: Place){
         viewModelScope.launch {
             _placeResult.value = RequestResult.Loading
+            val placeWithPendingStatus = place.apply { status = Place.STATUS_PENDING }
             _placeResult.value = runCatching { createFirebase(place) }
                 .fold(
                     onSuccess = { RequestResult.Success("Negocio creado con éxito") },
@@ -91,6 +95,39 @@ class PlacesViewModel: ViewModel() {
         db.collection("places")
             .add(place)
             .await()
+    }
+
+    fun updatePlaceStatus(placeId: String, status: String) {
+        viewModelScope.launch {
+            runCatching {
+                db.collection("places")
+                    .document(placeId)
+                    .update("status", status)
+                    .await()
+            }.onSuccess {
+                val updatedPlaces = _places.value.map { place ->
+                    if (place.id == placeId) {
+                        place.apply { this.status = status }
+                    } else {
+                        place
+                    }
+                }
+                _places.value = updatedPlaces
+
+                val updatedMyPlaces = _myPlaces.value.map { place ->
+                    if (place.id == placeId) {
+                        place.apply { this.status = status }
+                    } else {
+                        place
+                    }
+                }
+                _myPlaces.value = updatedMyPlaces
+            }
+        }
+    }
+
+    fun resetModerationResult() {
+        _moderationResult.value = null
     }
 
     fun loadPlaceById(id: String) {

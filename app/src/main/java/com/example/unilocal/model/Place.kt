@@ -14,8 +14,15 @@ class Place(
     val phoneNumber: String = "",
     val type: PlaceType = PlaceType.DEFAULT,
     val schedules: List<Schedule> = emptyList<Schedule>(),
-    val ownerId: String = ""
+    val ownerId: String = "",
+    var status: String = STATUS_PENDING
 ){
+
+    companion object {
+        const val STATUS_PENDING = "Pendiente"
+        const val STATUS_AUTHORIZED = "Autorizado"
+        const val STATUS_REJECTED = "Rechazado"
+    }
 
     fun isOpen():Boolean{
         val now = LocalDateTime.now()

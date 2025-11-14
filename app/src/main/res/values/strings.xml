@@ -85,6 +85,21 @@
     <string name="title_schedule">3. Horarios</string>
     <string name="add">Agregar</string>
 
+    <string name="tab_pending">Pendientes</string>
+    <string name="tab_authorized">Autorizados</string>
+    <string name="txt_moderation_empty_pending">No hay lugares pendientes por revisar.</string>
+    <string name="txt_moderation_empty_authorized">Aún no has autorizado ningún lugar.</string>
+    <string name="txt_moderation_empty_pending_subtitle">Cuando autorices o rechaces negocios desaparecerán de esta lista.</string>
+    <string name="txt_moderation_empty_authorized_subtitle">Aquí se mostrarán los lugares que hayas autorizado.</string>
+    <string name="cd_authorize_place">Autorizar lugar</string>
+    <string name="cd_reject_place">Rechazar lugar</string>
+    <string name="btn_authorize_place">Autorizar</string>
+    <string name="btn_reject_place">Rechazar</string>
+    <string name="txt_moderation_header_title">Gestiona los nuevos negocios</string>
+    <string name="txt_moderation_header_subtitle">Aprueba o rechaza los lugares enviados por la comunidad.</string>
+    <string name="txt_moderation_pending_badge">Pendientes: %1$d</string>
+    <string name="txt_moderation_authorized_badge">Autorizados: %1$d</string>
+
     <string name="txt_open">Abierto</string>
     <string name="txt_close">Cerrado</string>
     <string name="txt_search">Buscar</string>

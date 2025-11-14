@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.unilocal.model.Review
 import com.example.unilocal.utils.RequestResult
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,8 @@ class ReviewsViewModel : ViewModel() {
 
     private val _reviewResult = MutableStateFlow<RequestResult?>(null)
     val reviewResult: StateFlow<RequestResult?> = _reviewResult.asStateFlow()
+
+    private val userNameCache = mutableMapOf<String, String>()
 
     /**
      * Cargar reseñas del lugar desde Firestore.
@@ -42,6 +45,14 @@ class ReviewsViewModel : ViewModel() {
                         if (this.placeID.isBlank()) {
                             this.placeID = placeId
                         }
+                    }
+                }
+
+                val userNames = fetchUserNames(list.map { it.userID }.toSet())
+                list.forEach { review ->
+                    val name = userNames[review.userID]
+                    if (!name.isNullOrBlank()) {
+                        review.username = name
                     }
                 }
 
@@ -81,6 +92,11 @@ class ReviewsViewModel : ViewModel() {
                 // Actualizamos el ID en memoria
                 review.id = docRef.id
 
+                val userName = fetchUserNames(setOf(review.userID))[review.userID]
+                if (!userName.isNullOrBlank()) {
+                    review.username = userName
+                }
+
                 // Añadimos a la lista local
                 _reviews.value = _reviews.value + review
 
@@ -96,4 +112,34 @@ class ReviewsViewModel : ViewModel() {
     fun resetResult() {
         _reviewResult.value = null
     }
+
+    private suspend fun fetchUserNames(userIds: Set<String>): Map<String, String> {
+        if (userIds.isEmpty()) {
+            return emptyMap()
+        }
+
+        val result = mutableMapOf<String, String>()
+        val idsToFetch = userIds.filter { it.isNotBlank() && !userNameCache.containsKey(it) }
+
+        idsToFetch.chunked(10).forEach { batch ->
+            val querySnapshot = db.collection("users")
+                .whereIn(FieldPath.documentId(), batch)
+                .get()
+                .await()
+
+            querySnapshot.documents.forEach { doc ->
+                val name = doc.getString("name") ?: doc.getString("username") ?: ""
+                userNameCache[doc.id] = name
+            }
+        }
+
+        userIds.forEach { id ->
+            userNameCache[id]?.let { cachedName ->
+                result[id] = cachedName
+            }
+        }
+
+        return result
+    }
+
 }

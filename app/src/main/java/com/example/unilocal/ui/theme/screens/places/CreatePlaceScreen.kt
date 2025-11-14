@@ -431,7 +431,8 @@ fun CreatePlaceScreen(
                                 phoneNumber = phoneNumber,
                                 type = type as PlaceType,
                                 schedules = schedule,
-                                ownerId = userId ?: ""
+                                ownerId = userId ?: "",
+                                status = Place.STATUS_PENDING
                             )
 
                             placeViewModel.create(place)
