@@ -171,7 +171,7 @@ private fun ModerationTabs(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-                private fun ModerationTabChip(
+private fun ModerationTabChip(
             text: String,
             selected: Boolean,
             onClick: () -> Unit

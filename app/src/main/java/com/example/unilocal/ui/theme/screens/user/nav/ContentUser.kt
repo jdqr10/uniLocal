@@ -55,7 +55,9 @@ fun ContentUser(
             )
         }
         composable<RouteTab.Profile>{
-            Profile()
+            Profile(
+                userId = userId
+            )
         }
 
 

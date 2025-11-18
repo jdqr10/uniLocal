@@ -22,6 +22,12 @@ class PlacesViewModel: ViewModel() {
     private val _places = MutableStateFlow(emptyList<Place>())
     val places: StateFlow<List<Place>> = _places.asStateFlow()
 
+    private val _pendingPlaces = MutableStateFlow(emptyList<Place>())
+    val pendingPlaces: StateFlow<List<Place>> = _pendingPlaces.asStateFlow()
+
+    private val _authorizedPlaces = MutableStateFlow(emptyList<Place>())
+    val authorizedPlaces: StateFlow<List<Place>> = _authorizedPlaces.asStateFlow()
+
     private val _myPlaces = MutableStateFlow(emptyList<Place>())
     val myPlaces: StateFlow<List<Place>> = _myPlaces.asStateFlow()
 
@@ -42,7 +48,9 @@ class PlacesViewModel: ViewModel() {
 
     fun getAll(){
         viewModelScope.launch {
-            _places.value = getAllFirebase()
+            val places = getAllFirebase()
+            _places.value = places
+            refreshModerationBuckets(places)
         }
     }
 
@@ -168,6 +176,11 @@ class PlacesViewModel: ViewModel() {
 
     fun resetMyPlaces(){
         _myPlaces.value = listOf()
+    }
+
+    private fun refreshModerationBuckets(places: List<Place>) {
+        _pendingPlaces.value = places.filter { it.status.equals(Place.STATUS_PENDING, ignoreCase = true) }
+        _authorizedPlaces.value = places.filter { it.status.equals(Place.STATUS_AUTHORIZED, ignoreCase = true) }
     }
 }
 

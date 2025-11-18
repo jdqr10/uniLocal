@@ -57,15 +57,19 @@ fun Search(
     // Filtrado en vivo (case-insensitive). Si query vacío -> todos
     val filtered: List<Place> by remember(query, places) {
         mutableStateOf(
-            if (query.isBlank()) places
-            else {
-                val q = query.trim().lowercase()
-                places.filter { p ->
-                    p.title.lowercase().contains(q) ||
-                            p.address.lowercase().contains(q) ||
-                            p.type.name.lowercase().contains(q) ||
-                            p.city.name.lowercase().contains(q)
-                }
+            places
+                .filter { it.status == Place.STATUS_AUTHORIZED }
+                .let { authorized ->
+                    if (query.isBlank()) authorized
+                    else {
+                        val q = query.trim().lowercase()
+                        authorized.filter { p ->
+                            p.title.lowercase().contains(q) ||
+                                    p.address.lowercase().contains(q) ||
+                                    p.type.name.lowercase().contains(q) ||
+                                    p.city.name.lowercase().contains(q)
+                        }
+                    }
             }
         )
     }

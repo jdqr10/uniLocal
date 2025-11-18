@@ -56,7 +56,19 @@
     
     <!-- Update profile -->
     <string name="txt_update_profile">Actualizar datos</string>
-    <string name="btn_update_profile">Confirmar</string>"
+    <string name="btn_update_profile">Guardar cambios</string>
+    <string name="txt_profile_greeting">¡Hola!</string>
+    <string name="txt_profile_greeting_with_name">¡Hola, %1$s!</string>
+    <string name="txt_profile_intro">Personaliza tu perfil y mantén tu información al día.</string>
+    <string name="txt_profile_complete_title">Tu información</string>
+    <string name="txt_profile_subtitle">Comparte algunos detalles para que la comunidad te conozca.</string>
+    <string name="txt_profile_contact_hint">Recuerda verificar tus datos de contacto antes de guardar.</string>
+    <string name="txt_profile_places_label">Lugares</string>
+    <string name="txt_profile_reviews_label">Reseñas</string>
+    <string name="txt_profile_favorites_label">Favoritos</string>
+    <string name="txt_profile_email_helper">Tu correo de acceso no puede modificarse.</string>
+    <string name="txt_profile_city_helper">Selecciona la ciudad que mejor describe tu ubicación.</string>
+    <string name="txt_profile_loading">Cargando tu información…</string>
 
     <!-- Formulario de Crear lugar -->
     <string name="txt_title">Nombre del lugar</string>
@@ -91,6 +103,9 @@
     <string name="txt_moderation_empty_authorized">Aún no has autorizado ningún lugar.</string>
     <string name="txt_moderation_empty_pending_subtitle">Cuando autorices o rechaces negocios desaparecerán de esta lista.</string>
     <string name="txt_moderation_empty_authorized_subtitle">Aquí se mostrarán los lugares que hayas autorizado.</string>
+    <string name="txt_moderation_banner_success_title">¡Listo!</string>
+    <string name="txt_moderation_banner_error_title">Algo salió mal</string>
+    <string name="content_description_dismiss_banner">Cerrar alerta</string>
     <string name="cd_authorize_place">Autorizar lugar</string>
     <string name="cd_reject_place">Rechazar lugar</string>
     <string name="btn_authorize_place">Autorizar</string>

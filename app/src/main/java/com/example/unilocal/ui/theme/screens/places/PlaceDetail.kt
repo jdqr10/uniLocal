@@ -264,7 +264,7 @@ fun CreateCommentForm(
                     userID = userId ?: "",
                     username = userName?.takeIf { it.isNotBlank() } ?: "User",
                     placeID = placeId,
-                    rating = 5, // luego puedes conectar con tus estrellas
+                    rating = 5, // quemado
                     comment = comment,
                     date = com.google.firebase.Timestamp.now()
                 )

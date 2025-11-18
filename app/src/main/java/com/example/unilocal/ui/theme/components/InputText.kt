@@ -29,7 +29,8 @@ fun InputText(
     onValueChange: (String) -> Unit,
     onValidate: (String) -> Boolean,
     icon: ImageVector? = null,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    readOnly: Boolean = false,
 ){
 
     var isError by rememberSaveable { mutableStateOf(false) }

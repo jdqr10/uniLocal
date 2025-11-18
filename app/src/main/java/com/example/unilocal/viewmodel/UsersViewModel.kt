@@ -94,7 +94,36 @@ class UsersViewModel: ViewModel (){
         _userResult.value = null
     }
 
-   private suspend fun findByIdFirebase(id: String){
+    fun updateUser(user: User) {
+        viewModelScope.launch {
+            _userResult.value = RequestResult.Loading
+            _userResult.value = runCatching { updateUserFirebase(user) }
+                .fold(
+                    onSuccess = {
+                        _currentUser.value = user
+                        _users.value = _users.value.map { existing ->
+                            if (existing.id == user.id) user else existing
+                        }
+                        RequestResult.Success("Perfil actualizado correctamente")
+                    },
+                    onFailure = {
+                        RequestResult.Failure(it.message ?: "Error al actualizar el perfil")
+                    }
+                )
+        }
+    }
+
+    private suspend fun updateUserFirebase(user: User) {
+        val payload = user.copy(password = "")
+
+        db.collection("users")
+            .document(user.id)
+            .set(payload)
+            .await()
+    }
+
+
+    private suspend fun findByIdFirebase(id: String){
         val snapshot = db.collection("users")
             .document(id)
             .get()
