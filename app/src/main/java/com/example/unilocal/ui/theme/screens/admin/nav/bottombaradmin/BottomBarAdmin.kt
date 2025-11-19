@@ -64,5 +64,5 @@ enum class Destination(
     val icon: ImageVector,
 ){
     CONFIRMATION(RouteTabAdmin.Confirmation, R.string.txt_menu_home, Icons.Default.Home),
-    PROFILE(RouteTabAdmin.ProfileAdmin, R.string.txt_menu_profile, Icons.Default.AccountCircle)
+    //PROFILE(RouteTabAdmin.ProfileAdmin, R.string.txt_menu_profile, Icons.Default.AccountCircle)
 }

@@ -107,7 +107,12 @@ fun Navigation(
             }
 
             composable<RouteScreen.HomeA>{
-                HomeAdmin()
+                HomeAdmin(
+                    logout = {
+                        SharedPrefsUtil.clearPreferences(context)
+                        navController.navigate(RouteScreen.Login)
+                    }
+                )
             }
 
             composable<RouteScreen.PlaceDetail>{
